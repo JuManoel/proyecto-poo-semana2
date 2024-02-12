@@ -43,4 +43,22 @@ public class Keyboard {
         return value;//retorna el valor
     }
 
+    public static int readInt(int from, int to, String mensaje) {
+        //sobre carga del metodo readInt
+        int value;
+        int tmp = Math.min(from, to);
+        if (tmp == to) {
+            to = from;
+            from = tmp;
+        }
+    
+        do {
+            value = readInt(mensaje);
+            if (value < from || value > to) {
+                System.out.printf("%sRango inválido. %s", Utils.RED, Utils.RESET);
+            }
+        } while (value < from || value > to);
+        return value;
+    }
+
 }
