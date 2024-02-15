@@ -96,4 +96,45 @@ public class Keyboard {
         return value;
     }
 
+    public static long readLong(String message) {
+        //leer longs
+        boolean ok;//valida si el valor de la entrada es correcto
+        long value = Long.MIN_VALUE;//valor minimo del long
+        System.out.print(message);//imprime un mensage
+    
+        do {
+            try {
+                ok = true;//la entrada esta bien
+                value = sc.nextLong(); //recibe el valor
+            } catch (InputMismatchException e) {//caso tenga un error de input
+                ok = false;//no esta ok
+                System.out.print(">> Valor erróneo. " + message);//muestra que el valor ingresado es malo
+            } finally {
+                sc.nextLine();//salto de linea
+            }
+        } while (!ok);//si la entrada es ok. entonce termina el ciclo. si no. repite
+    
+        return value;//retorna el valor
+    }
+
+    public static long readLong(long from, long to, String mensaje) {
+        //sobre carga del metodo readLong
+        long value;
+        long tmp = Math.min(from, to);
+        if (tmp == to) {
+            to = from;
+            from = tmp;
+        }
+    
+        do {
+            value = readLong(mensaje);
+            if (value < from || value > to) {
+                System.out.printf("%sRango inválido. %s", Utils.RED, Utils.RESET);
+            }
+        } while (value < from || value > to);
+        return value;
+    }
+    
+    
+
 }
