@@ -31,8 +31,10 @@ public class App {
                         double promedio=promediarEdades();
                         System.out.printf("El promedio de edades de los niños es de %.2f\n",promedio);
                         break;
-                    // … más casos … 
-                    // …
+                    case 3:
+                        String pasaTiempo=ingresarPasatiempos();
+                        System.out.printf("Pasatiempos ingresados: %s\n",pasaTiempo);
+                        break;
                     case 0:
                         salir();
                         break;
@@ -57,13 +59,13 @@ public class App {
   static int leerOpcion() {
     String opciones =
       String.format("\n%sMenú de opciones:%s\n", Utils.GREEN, Utils.RESET) +
-      "  1 - Serie de un rango               Opción 4\n" +
+      "  1 - Serie de un rango              Opción 4\n" +
       "  2 - Promediar edades               Opción 5\n" +
-      "  3 - Opción 3               Opción 6\n" +
+      "  3 - Ingresar pasatiempos           Opción 6\n" +
       String.format("  %s0 - Salir%s\n", Utils.RED, Utils.RESET) +
       String.format("\nElija una opción (%s0 para salir%s) > ", Utils.RED, Utils.RESET);
 
-    int opcion = Keyboard.readInt(opciones);
+    int opcion = Keyboard.readInt(0,6,opciones);
     return opcion;
   }
 
@@ -93,9 +95,9 @@ public class App {
     double promedio;
     String mensage;
     do {
-        mensage="Edad (Entre 1 y 5, 0 termina): ";
+        mensage="Edad (Entre 5 y 10, 0 termina): ";
         mensage=String.format("%s%s%s", Utils.BLUE, mensage, Utils.RESET);
-        edad=Keyboard.readInt(0, 5, mensage);
+        edad=Keyboard.readInt(5, 10,0, mensage);
         soma+=edad;
         cont+=edad!=0?1:0;
     } while (edad!=0);
@@ -103,5 +105,13 @@ public class App {
     return promedio;
   }
 
+
+
+  static String ingresarPasatiempos(){
+    String mensaje=String.format("%s Pasatiempos preferidos (entre 10 y 100 caracteres): %s",Utils.BLUE,Utils.RESET);
+    mensaje+=String.format(" %s(pulsa intro para no ingresar datos)%s",Utils.GREEN,Utils.RESET);
+    String pasaTiempo=Keyboard.readString(10, 100, mensaje);
+    return pasaTiempo;
+  }
 
 }

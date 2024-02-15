@@ -22,6 +22,23 @@ public class Keyboard {
         return sc.nextLine();
     }
 
+    public static String readString(int from, int to, String message){
+        String entrada;
+        boolean ok;
+        System.out.println(message);
+        do {
+            ok=true;
+            entrada=sc.nextLine();
+            if(entrada.length()<from && entrada.length()>to){
+                    System.out.printf("%sEntrada Demasiado Grande%s\n", Utils.RED, Utils.RESET);
+                    ok=false;
+            }
+
+        } while (!ok);
+
+        return entrada;
+    }
+
     public static int readInt(String message) {
         //leer ints
         boolean ok;//valida si el valor de la entrada es correcto
@@ -58,6 +75,24 @@ public class Keyboard {
                 System.out.printf("%sRango inválido. %s", Utils.RED, Utils.RESET);
             }
         } while (value < from || value > to);
+        return value;
+    }
+
+    public static int readInt(int from, int to, int exit, String mensaje) {
+        //sobre carga del metodo readInt
+        int value;
+        int tmp = Math.min(from, to);
+        if (tmp == to) {
+            to = from;
+            from = tmp;
+        }
+    
+        do {
+            value = readInt(mensaje);
+            if ((value < from || value > to) && value!=exit ) {
+                System.out.printf("%sRango inválido. %s", Utils.RED, Utils.RESET);
+            }
+        } while ((value < from || value > to) && value!=exit);
         return value;
     }
 
