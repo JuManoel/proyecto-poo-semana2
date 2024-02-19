@@ -135,6 +135,139 @@ public class Keyboard {
         return value;
     }
     
+    public static long readLong(long from, long to, long exit, String mensaje) {
+        //sobre carga del metodo readInt
+        long value;
+        long tmp = Math.min(from, to);
+        if (tmp == to) {
+            to = from;
+            from = tmp;
+        }
     
+        do {
+            value = readLong(mensaje);
+            if ((value < from || value > to) && value!=exit ) {
+                System.out.printf("%sRango inválido. %s", Utils.RED, Utils.RESET);
+            }
+        } while ((value < from || value > to) && value!=exit);
+        return value;
+    }
+
+
+    public static double readDouble(String message) {
+        //leer doubles
+        boolean ok;//valida si el valor de la entrada es correcto
+        double value = Double.NaN;//valor minimo del double
+        System.out.print(message);//imprime un mensage
+    
+        do {
+            try {
+                ok = true;//la entrada esta bien
+                value = sc.nextDouble(); //recibe el valor
+            } catch (InputMismatchException e) {//caso tenga un error de input
+                ok = false;//no esta ok
+                System.out.print(">> Valor erróneo. " + message);//muestra que el valor ingresado es malo
+            } finally {
+                sc.nextLine();//salto de linea
+            }
+        } while (!ok);//si la entrada es ok. entonce termina el ciclo. si no. repite
+    
+        return value;//retorna el valor
+    }
+
+    public static double readDouble(double from, double to, String mensaje) {
+        //sobre carga del metodo readInt
+        double value;
+        double tmp = Math.min(from, to);
+        if (tmp == to) {
+            to = from;
+            from = tmp;
+        }
+    
+        do {
+            value = readDouble(mensaje);
+            if (value < from || value > to) {
+                System.out.printf("%sRango inválido. %s", Utils.RED, Utils.RESET);
+            }
+        } while (value < from || value > to);
+        return value;
+    }
+
+    public static double readLong(double from, double to, double exit, String mensaje) {
+        //sobre carga del metodo readInt
+        double value;
+        double tmp = Math.min(from, to);
+        if (tmp == to) {
+            to = from;
+            from = tmp;
+        }
+    
+        do {
+            value = readDouble(mensaje);
+            if ((value < from || value > to) && value!=exit ) {
+                System.out.printf("%sRango inválido. %s", Utils.RED, Utils.RESET);
+            }
+        } while ((value < from || value > to) && value!=exit);
+        return value;
+    }
+
+    
+public static boolean readBoolean(String message) {
+    message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+    boolean ok;
+    boolean value = false;
+    System.out.print(message);
+
+    do {
+        try {
+            ok = true;
+            String str = ' ' + sc.nextLine().toLowerCase().trim() + ' ';//recebe uma string, minuscula com um espaço ao final
+            //si so aperto enter, escreve um espaço 
+            if (" si s true t yes y ".contains(str)) {//valida si o usuario (si s true t yes y)
+                value = true;
+            } else if (" no n false f not ".contains(str)) {//valida si o usuario digitou(no n false f not)
+                value = false;
+            } else {
+                throw new InputMismatchException();//"lanza" un exeception
+            }
+        } catch (InputMismatchException e) {
+            ok = false;
+            System.out.printf(
+               "%s>> Se esperaba [si|s|true|t|yes|y|no|not|n|false|f]%s %s", 
+               Utils.RED, Utils.RESET, message
+            );
+        }
+    } while (!ok);
+
+    return value;
+}
+
+
+public static LocalDate readDate(String message) {
+    message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+    boolean ok;
+    LocalDate date = LocalDate.now();
+    System.out.print(message);
+
+    do {
+        try {
+            ok = true;
+            String strDate = sc.nextLine().trim().toLowerCase();
+            if (!"hoy|now".contains(strDate)) {
+                date = LocalDate.parse(strDate);
+            }
+        } catch (DateTimeParseException dtpe) {
+            ok = false;
+            System.out.printf(
+               ">> %sFecha errónea%s. %s", Utils.RED, Utils.RESET, message
+            );
+        }
+
+    } while (!ok);
+
+    return date;
+}
+
+
 
 }

@@ -28,12 +28,23 @@ public class App {
                         serie();
                         break;
                     case 2:
-                        double promedio=promediarEdades();
-                        System.out.printf("El promedio de edades de los niños es de %.2f\n",promedio);
+                        double promedioEdad=promediarEdades();
+                        System.out.printf("El promedio de edades de los niños es de %.2f\n",promedioEdad);
                         break;
                     case 3:
                         String pasaTiempo=ingresarPasatiempos();
                         System.out.printf("Pasatiempos ingresados: %s\n",pasaTiempo);
+                        break;
+                    case 4:
+                        double siglos=aSiglos();
+                        System.out.printf("%.1f siglos\n",siglos);
+                        break;
+                    case 5:
+                        double promedioPeso=promediarPesos();
+                        System.out.printf("El promedio de pesos de las personas es de %.2f kilos\n",promedioPeso);
+                        break;
+                    case 6:
+                        probarBoolean();
                         break;
                     case 0:
                         salir();
@@ -59,9 +70,11 @@ public class App {
   static int leerOpcion() {
     String opciones =
       String.format("\n%sMenú de opciones:%s\n", Utils.GREEN, Utils.RESET) +
-      "  1 - Serie de un rango              Opción 4\n" +
-      "  2 - Promediar edades               Opción 5\n" +
-      "  3 - Ingresar pasatiempos           Opción 6\n" +
+      "  1 - Serie de un rango              6 - Opciones de falso o verdadero\n" +
+      "  2 - Promediar edades               7 - Ingreso de fechas\n" +
+      "  3 - Ingresar pasatiempos           8 - Ingreso de fecha y hora\n" +
+      "  4 - Convertir a siglos             9 - Ingreso de duración\n"+
+      "  5 - Promediar pesos               10 - ...\n"+
       String.format("  %s0 - Salir%s\n", Utils.RED, Utils.RESET) +
       String.format("\nElija una opción (%s0 para salir%s) > ", Utils.RED, Utils.RESET);
 
@@ -113,5 +126,35 @@ public class App {
     String pasaTiempo=Keyboard.readString(10, 100, mensaje);
     return pasaTiempo;
   }
+
+  static double aSiglos(){
+    String mensaje="Años (40000-999999, 0 termina): ";
+    long anio=Keyboard.readLong(40000, 999999, 0, mensaje);
+    double siglos=anio/100.0;
+    System.out.printf("%d años equivalen a ",anio);
+    return siglos;
+  }
+
+  static double promediarPesos(){
+    double promedio=0.0;
+    String mensaje=String.format("%sPeso(Entre 10.0 y 150.0, 0 termina): %s",Utils.BLUE,Utils.RESET);
+    double peso=0.0;
+    int cont=1;
+    do {
+        peso=Keyboard.readLong(10.0, 150.0, 0, mensaje);
+        promedio+=peso;
+        cont+=peso!=0?1:0;
+    } while (peso!=0);
+    promedio/=cont;
+    return promedio;
+  }
+
+  private static void probarBoolean() {
+    boolean ok = Keyboard.readBoolean("Indique si funciona o no: ");
+    System.out.printf("Funciona: %s", ok ? "SI" : "NO");
+    System.out.println();
+}
+
+
 
 }
