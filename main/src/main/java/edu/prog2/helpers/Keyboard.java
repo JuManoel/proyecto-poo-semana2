@@ -212,62 +212,115 @@ public class Keyboard {
     }
 
     
-public static boolean readBoolean(String message) {
-    message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
-    boolean ok;
-    boolean value = false;
-    System.out.print(message);
+    public static boolean readBoolean(String message) {
+        message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+        boolean ok;
+        boolean value = false;
+        System.out.print(message);
 
-    do {
-        try {
-            ok = true;
-            String str = ' ' + sc.nextLine().toLowerCase().trim() + ' ';//recebe uma string, minuscula com um espaço ao final
-            //si so aperto enter, escreve um espaço 
-            if (" si s true t yes y ".contains(str)) {//valida si o usuario (si s true t yes y)
-                value = true;
-            } else if (" no n false f not ".contains(str)) {//valida si o usuario digitou(no n false f not)
-                value = false;
-            } else {
-                throw new InputMismatchException();//"lanza" un exeception
+        do {
+            try {
+                ok = true;
+                String str = ' ' + sc.nextLine().toLowerCase().trim() + ' ';//recebe uma string, minuscula com um espaço ao final
+                //si so aperto enter, escreve um espaço 
+                if (" si s true t yes y ".contains(str)) {//valida si o usuario (si s true t yes y)
+                    value = true;
+                } else if (" no n false f not ".contains(str)) {//valida si o usuario digitou(no n false f not)
+                    value = false;
+                } else {
+                    throw new InputMismatchException();//"lanza" un exeception
+                }
+            } catch (InputMismatchException e) {
+                ok = false;
+                System.out.printf(
+                "%s>> Se esperaba [si|s|true|t|yes|y|no|not|n|false|f]%s %s", 
+                Utils.RED, Utils.RESET, message
+                );
             }
-        } catch (InputMismatchException e) {
-            ok = false;
-            System.out.printf(
-               "%s>> Se esperaba [si|s|true|t|yes|y|no|not|n|false|f]%s %s", 
-               Utils.RED, Utils.RESET, message
-            );
-        }
-    } while (!ok);
+        } while (!ok);
 
-    return value;
-}
+        return value;
+    }
 
 
-public static LocalDate readDate(String message) {
-    message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
-    boolean ok;
-    LocalDate date = LocalDate.now();
-    System.out.print(message);
+    public static LocalDate readDate(String message) {
+        //leer datas
+        message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+        boolean ok;
+        LocalDate date = LocalDate.now();//pega a data de hoje
+        System.out.print(message);
 
-    do {
-        try {
-            ok = true;
-            String strDate = sc.nextLine().trim().toLowerCase();
-            if (!"hoy|now".contains(strDate)) {
-                date = LocalDate.parse(strDate);
+        do {
+            try {
+                ok = true;
+                String strDate = sc.nextLine().trim().toLowerCase();//recibe un string data
+                if (!"hoy|now".contains(strDate)) {//valida si no es la data de hoy
+                    date = LocalDate.parse(strDate);//convierte la data ingresata en el tipo LocalDate
+                }
+            } catch (DateTimeParseException dtpe) {
+                ok = false;
+                System.out.printf(
+                ">> %sFecha errónea%s. %s", Utils.RED, Utils.RESET, message
+                );
             }
-        } catch (DateTimeParseException dtpe) {
-            ok = false;
-            System.out.printf(
-               ">> %sFecha errónea%s. %s", Utils.RED, Utils.RESET, message
-            );
+
+        } while (!ok);
+
+        return date;
+    }
+
+    public static LocalDate readDate(String from, String to, String mensaje) {
+        //leer datas dentro de un rango
+        mensaje = String.format("%s%s%s", Utils.BLUE, mensaje, Utils.RESET);
+        boolean ok;
+        LocalDate date;//variable auxiliar
+        //System.out.print(mensaje);
+        LocalDate datefrom=LocalDate.parse(from);
+        LocalDate dateto=LocalDate.parse(to);
+        LocalDate inputDate;
+        if(datefrom.isAfter(dateto)){
+            date=datefrom;
+            datefrom=dateto;
+            dateto=date;
         }
+        do {
+            ok = true;
+            inputDate = readDate(mensaje);//recibe un data
+            if (inputDate.isBefore(datefrom) || inputDate.isAfter(dateto)) {//valida si no es la data de hoy
+                ok = false;
+                System.out.printf(
+                ">> %sRango Invalido%s. %s", Utils.RED, Utils.RESET, mensaje
+                );
+            }
 
-    } while (!ok);
+        } while (!ok);
 
-    return date;
-}
+        return inputDate;
+    }
 
-
+    public static LocalDateTime readDateTime(String message) {
+        message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+        boolean ok;
+        LocalDateTime dateTime = LocalDateTime.now();
+        System.out.print(message);
+    
+        do {
+            try {
+                ok = true;
+                String strDateTime = sc.nextLine().trim().toLowerCase();
+                if (!"ahora|now".contains(strDateTime)) {
+                    dateTime = LocalDateTime.parse(strDateTime.replace(" ", "T"));
+                }
+            } catch (DateTimeParseException dtpe) {
+                ok = false;
+                System.out.printf(
+                   ">> %sFecha y hora errónea%s. %s", Utils.RED, Utils.RESET, message
+                );
+            }
+    
+        } while (!ok);
+    
+        return dateTime;
+    }
 
 }

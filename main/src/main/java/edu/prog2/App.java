@@ -1,5 +1,6 @@
 package edu.prog2;
 
+import java.time.LocalDate;
 import java.util.Locale;
 
 import main.java.edu.prog2.helpers.Keyboard;
@@ -46,6 +47,10 @@ public class App {
                     case 6:
                         probarBoolean();
                         break;
+                    case 7:
+                        LocalDate date=probarFecha();
+                        System.out.printf("Fecha de nascimiento valida: %s\n",date);
+                        break;
                     case 0:
                         salir();
                         break;
@@ -78,7 +83,7 @@ public class App {
       String.format("  %s0 - Salir%s\n", Utils.RED, Utils.RESET) +
       String.format("\nElija una opción (%s0 para salir%s) > ", Utils.RED, Utils.RESET);
 
-    int opcion = Keyboard.readInt(0,6,opciones);
+    int opcion = Keyboard.readInt(0,10,opciones);
     return opcion;
   }
 
@@ -153,7 +158,19 @@ public class App {
     boolean ok = Keyboard.readBoolean("Indique si funciona o no: ");
     System.out.printf("Funciona: %s", ok ? "SI" : "NO");
     System.out.println();
-}
+    }
+
+    static LocalDate probarFecha(){
+        LocalDate datahoy=LocalDate.now();
+        System.out.printf("Fecha Actual: %s\n",datahoy);
+        int anio=datahoy.getYear();
+        int aniofrom=anio-40;
+        int anioto=anio-18;
+        String dataFrom=String.format("%d-01-01",aniofrom);
+        String dataTo=String.format("%d-12-31",anioto);
+        System.out.printf("Se aceptan nacidos entre %s y %s\n",dataFrom,dataTo);
+        return Keyboard.readDate(dataFrom, dataTo, "Fecha de nascimiento (AAAA-MM-DD): ");
+    }
 
 
 
