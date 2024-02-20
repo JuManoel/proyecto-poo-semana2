@@ -7,6 +7,7 @@ import java.util.Locale;
 
 import main.java.edu.prog2.helpers.Keyboard;
 import main.java.edu.prog2.helpers.Utils;
+import main.java.edu.prog2.models.EstadoPQR;
 
 public class App {
 
@@ -60,6 +61,9 @@ public class App {
                         Duration duration=probarDuracion();
                         System.out.printf("Duracion ingresada: %s,\n",duration);
                         break;
+                    case 10:
+                        probarEnum();
+                        break;
                     case 0:
                         salir();
                         break;
@@ -88,7 +92,7 @@ public class App {
       "  2 - Promediar edades               7 - Ingreso de fechas\n" +
       "  3 - Ingresar pasatiempos           8 - Ingreso de fecha y hora\n" +
       "  4 - Convertir a siglos             9 - Ingreso de duración\n"+
-      "  5 - Promediar pesos               10 - ...\n"+
+      "  5 - Promediar pesos               10 - Enumeracion\n"+
       String.format("  %s0 - Salir%s\n", Utils.RED, Utils.RESET) +
       String.format("\nElija una opción (%s0 para salir%s) > ", Utils.RED, Utils.RESET);
 
@@ -200,6 +204,11 @@ public class App {
         System.out.println("Se espera duracion entre 1:00 y 20:00 horas");
         Duration duracion=Keyboard.readDuration("1:00", "20:00", "Ingrese la Duracion (HH:MM): ");
         return duracion;
+    }
+
+    private static void probarEnum() {
+        EstadoPQR estado = EstadoPQR.ASIGNADO;
+        System.out.println("El PQR está en estado: " + estado);
     }
 
 }
