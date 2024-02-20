@@ -1,5 +1,6 @@
 package edu.prog2;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Locale;
@@ -54,6 +55,10 @@ public class App {
                         break;
                     case 8:
                         probarFechaHora();
+                        break;
+                    case 9:
+                        Duration duration=probarDuracion();
+                        System.out.printf("Duracion ingresada: %s,\n",duration);
                         break;
                     case 0:
                         salir();
@@ -189,6 +194,12 @@ public class App {
         date=Keyboard.readDateTime(datefrom, dateto, mensaje);
         System.out.printf("Fecha y hora: %s\n",date);
         System.out.printf("Fecha y hora para humanos: %s\n",Utils.strDateTime(date));
+    }
+
+    public static Duration probarDuracion(){
+        System.out.println("Se espera duracion entre 1:00 y 20:00 horas");
+        Duration duracion=Keyboard.readDuration("1:00", "20:00", "Ingrese la Duracion (HH:MM): ");
+        return duracion;
     }
 
 }

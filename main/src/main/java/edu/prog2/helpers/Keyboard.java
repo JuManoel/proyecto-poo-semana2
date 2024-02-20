@@ -341,11 +341,74 @@ public class Keyboard {
             if (inputDateTime.isBefore(from) || inputDateTime.isAfter(to)) {
                 ok = false;
                 System.out.printf(
-                ">> %sRango Invalido%s. %s", Utils.RED, Utils.RESET, message
+                ">> %sRango Invalido%s. %s", Utils.RED, Utils.RESET, mensaje
                 );
             }
         } while (!ok);
     
         return inputDateTime;
+    }
+
+    private static Duration toDuration(String strDuration) {
+        String[] aDuration = strDuration.trim().split(":");
+        if (aDuration.length != 2) {
+            throw new IllegalArgumentException("Se esperaba HH:MM");
+        }
+    
+        return Duration.parse(
+            String.format("PT%sH%sM", aDuration[0].trim(), aDuration[1].trim())
+        );
+    }
+
+    public static Duration readDuration(String message) {
+        message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+        boolean ok;
+        Duration duration = Duration.ZERO;
+        System.out.print(message);
+    
+        do {
+            try {
+                ok = true;
+                String strDuration = sc.nextLine();
+                duration = toDuration(strDuration);
+            } catch (Exception e) {
+                ok = false;
+                System.out.printf(
+                    ">> %sDuración errónea%s. %s", Utils.RED, Utils.RESET, message
+                );
+            }
+    
+        } while (!ok);
+    
+        return duration;
+    }
+
+    public static Duration readDuration(String from, String to, String mensaje) {
+        //message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+        boolean ok;
+        Duration duration;
+        Duration duraFrom=toDuration(from);
+        Duration duraTo=toDuration(to);
+        if(duraFrom.compareTo(duraTo)>0){
+            duration=duraFrom;
+            duraFrom=duraTo;
+            duraTo=duration;
+        }
+        //System.out.print(message);
+        Duration strDuration;
+        do {
+            ok = true;
+            strDuration = readDuration(mensaje);
+            //duration = toDuration(strDuration);
+            if((strDuration.compareTo(duraFrom)<0) || (strDuration.compareTo(duraTo)>0)){
+                ok = false;
+            System.out.printf(
+                ">> %sRango Ivalido%s. %s", Utils.RED, Utils.RESET, mensaje
+            );
+            }
+    
+        } while (!ok);
+    
+        return strDuration;
     }
 }
