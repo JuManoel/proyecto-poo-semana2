@@ -323,4 +323,29 @@ public class Keyboard {
         return dateTime;
     }
 
+    public static LocalDateTime readDateTime(LocalDateTime from, LocalDateTime to, String mensaje) {
+        //message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+        boolean ok;
+        LocalDateTime dateTime;//variable auxiliar
+        LocalDateTime inputDateTime;
+        if(from.isAfter(to)){
+            dateTime=from;
+            from=to;
+            to=dateTime;
+        }
+        //System.out.print(message);
+    
+        do {
+            ok = true;
+            inputDateTime = readDateTime(mensaje);
+            if (inputDateTime.isBefore(from) || inputDateTime.isAfter(to)) {
+                ok = false;
+                System.out.printf(
+                ">> %sRango Invalido%s. %s", Utils.RED, Utils.RESET, message
+                );
+            }
+        } while (!ok);
+    
+        return inputDateTime;
+    }
 }

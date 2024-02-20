@@ -1,6 +1,7 @@
 package edu.prog2;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 import main.java.edu.prog2.helpers.Keyboard;
@@ -50,6 +51,9 @@ public class App {
                     case 7:
                         LocalDate date=probarFecha();
                         System.out.printf("Fecha de nascimiento valida: %s\n",date);
+                        break;
+                    case 8:
+                        probarFechaHora();
                         break;
                     case 0:
                         salir();
@@ -154,13 +158,13 @@ public class App {
     return promedio;
   }
 
-  private static void probarBoolean() {
-    boolean ok = Keyboard.readBoolean("Indique si funciona o no: ");
-    System.out.printf("Funciona: %s", ok ? "SI" : "NO");
-    System.out.println();
+    private static void probarBoolean() {
+        boolean ok = Keyboard.readBoolean("Indique si funciona o no: ");
+        System.out.printf("Funciona: %s", ok ? "SI" : "NO");
+        System.out.println();
     }
 
-    static LocalDate probarFecha(){
+    private static LocalDate probarFecha(){
         LocalDate datahoy=LocalDate.now();
         System.out.printf("Fecha Actual: %s\n",datahoy);
         int anio=datahoy.getYear();
@@ -172,6 +176,19 @@ public class App {
         return Keyboard.readDate(dataFrom, dataTo, "Fecha de nascimiento (AAAA-MM-DD): ");
     }
 
-
+    public static void probarFechaHora() {
+        String mensaje="Fecha y hora de ingreso: ";
+        LocalDateTime date=Keyboard.readDateTime(mensaje);
+        System.out.printf("Fecha y hora: %s\n",date);
+        mensaje="Nueva fecha y hora de ingreso: ";
+        date=Keyboard.readDateTime(mensaje);
+        System.out.println("Rango para el seguiente ingreso: 2000-01-01 00:00 - 2022-12-31 23:59");
+        LocalDateTime datefrom=LocalDateTime.parse("2000-01-01T00:00");
+        LocalDateTime dateto=LocalDateTime.parse("2022-12-31T23:59");
+        mensaje="Ingreso (AAAA-MM-DD HH:MM): ";
+        date=Keyboard.readDateTime(datefrom, dateto, mensaje);
+        System.out.printf("Fecha y hora: %s\n",date);
+        System.out.printf("Fecha y hora para humanos: %s\n",Utils.strDateTime(date));
+    }
 
 }

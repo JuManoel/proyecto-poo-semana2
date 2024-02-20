@@ -8,6 +8,8 @@ import java.io.StringReader;
 import java.lang.reflect.Constructor;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.Properties;
 import java.util.Random;
@@ -28,5 +30,12 @@ public class Utils {
     public static final String CYAN = "\u001B[36m";
     public static final String WHITE = "\u001B[37m";
     public static final String PATH = "./data/";
+    
+    public static String strDateTime(LocalDateTime dateTime) {
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        return dateTime.format(formato);
+    }
+
+
 
 }
