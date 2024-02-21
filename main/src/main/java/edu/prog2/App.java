@@ -3,6 +3,7 @@ package edu.prog2;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import java.util.Locale;
 
 import main.java.edu.prog2.helpers.Keyboard;
@@ -209,6 +210,12 @@ public class App {
     private static void probarEnum() {
         EstadoPQR estado = EstadoPQR.ASIGNADO;
         System.out.println("El PQR está en estado: " + estado);
+        System.out.println(Arrays.toString(estado.values()));
+        System.out.println("Estado: " + estado.values()[2]);
+        System.out.println(estado.getEnum("asigNAdo PARA esTudio"));
+        System.out.println(estado.valueOf("ASIGNADO"));
+        estado = Keyboard.readEnum(EstadoPQR.class, "Estados elegibles:");
+        System.out.println("El estado del PQR es: " + estado);
     }
 
 }

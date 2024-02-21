@@ -411,4 +411,27 @@ public class Keyboard {
     
         return strDuration;
     }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends Enum<T>> T readEnum(Class<T> c, String message) {
+        message = String.format("%s%s%s", Utils.BLUE, message, Utils.RESET);
+        Object[] allItems = (EnumSet.allOf(c)).toArray();
+
+        int i;
+        for (i = 0; i < allItems.length; i++) {
+            message += String.format("%n%3d - %s", i + 1, allItems[i]);
+        }
+        
+        message = String.format(
+            "%s%nElija una opción entre 1 y %d: ", message, allItems.length
+        );
+
+        do {
+            i = readInt(message);
+            System.out.println();
+        } while (i < 1 || i > allItems.length);
+
+        return (T) allItems[i - 1];
+    }
+
 }
